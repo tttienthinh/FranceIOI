@@ -5,7 +5,7 @@ t_ligne = t_ligne.split()
 ligne = {}
 for i, num in enumerate(t_ligne):
     ligne[i+1] = [int(num), -1 ]
-
+del t_ligne
 code = input()
 length = len(code)
 
