@@ -1,27 +1,24 @@
 import sys
-N = int(input())
+input()
 
-ligne = input()
-ligne = ligne.split()
+ligne = input().split()
 ligne = [[int(num), -1 , i+1] for i, num in enumerate(ligne)]
-
+print(sys.getsizeof(ligne))
 code = input()
 length = len(code)
 
 def find(id):
-    parent = ligne[id][0]-1
     if ligne[id][1] == -1:
-        if parent == -1:
+        if ligne[id][0] == 0:
             ligne[id][1] = 0
         else:
-            find(parent)
-            ligne[id][1] = ligne[parent][1]+1
+            find(ligne[id][0]-1)
+            ligne[id][1] = ligne[ligne[id][0]-1][1]+1
 
 for num in range(len(ligne.copy())):
     find(num)
 
 ligne.sort(key=lambda x: x[1])
-
 
 for recipient, value, num in ligne:
     str_num = str(num)
@@ -32,7 +29,7 @@ for recipient, value, num in ligne:
                 matching = False
                 break
         if matching:
-            stdout.write('{} '.format(str_num))
+            print(str_num, end=' ')
 """ 
 8
 3 3 7 3 6 7 0 0
