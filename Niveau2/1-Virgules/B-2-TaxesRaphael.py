@@ -13,4 +13,3 @@ prixttc=round(prixttc)
 prixttc=prixttc/100
 
 print(prixttc)
-print(0.2+0.1)
