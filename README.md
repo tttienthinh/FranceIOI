@@ -4,4 +4,5 @@ http://www.france-ioi.org/algo/chapters.php
   
 Tous ces corrigés ne sont donnés qu'à titre indicatif, ils peuvent ne plus être fonctionnels...  
 
-# Attention France-IOI fonctionne sous Python3.5 !!!
+# Attention France-IOI fonctionne sous Python3.5 !!!  
+Contactez moi si vous souhaitez soumettre des solutions que je n'ai pas encore !  
