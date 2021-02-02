@@ -1,37 +1,29 @@
-import sys
-input()
+from queue import Queue
+nbContainers = int(input())
+fils = [[] for _ in range(nbContainers + 1)]
+for carton,container in enumerate(input().split(),1):
+  fils[ int(container) ].append(carton)
+masque = input()
 
-ligne = input().split()
-ligne = [[int(num), -1 , i+1] for i, num in enumerate(ligne)]
-print(sys.getsizeof(ligne))
-code = input()
-length = len(code)
+def compatible(carton,masque):
+  carton = str(carton)
+  if len(masque) != len(carton):
+     return False
+  for chiffreC,chiffreM in zip(carton,masque):
+     if chiffreC != chiffreM and chiffreM != "?":
+        return False
+  return True
 
-def find(id):
-    if ligne[id][1] == -1:
-        if ligne[id][0] == 0:
-            ligne[id][1] = 0
-        else:
-            find(ligne[id][0]-1)
-            ligne[id][1] = ligne[ligne[id][0]-1][1]+1
+enAttente = Queue(nbContainers)
+for carton in fils[0]:
+  enAttente.put(carton)
 
-for num in range(len(ligne.copy())):
-    find(num)
+while not enAttente.empty():
+  container = enAttente.get()
+  for carton in fils[ container ]:
+     enAttente.put(carton)
+  if compatible(container,masque):
+     print(container,end=" ")
 
-ligne.sort(key=lambda x: x[1])
-
-for recipient, value, num in ligne:
-    str_num = str(num)
-    if length == len(str_num):
-        matching = True
-        for i in range(length):
-            if not (code[i] == '?' or code[i]==str_num[i]):
-                matching = False
-                break
-        if matching:
-            print(str_num, end=' ')
-""" 
-8
-3 3 7 3 6 7 0 0
-?
-"""
+while not enAttente.empty():
+    print(enAttente.get())
