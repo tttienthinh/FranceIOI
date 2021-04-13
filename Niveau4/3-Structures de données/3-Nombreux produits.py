@@ -1,33 +1,36 @@
+from sys import stdout, stdin
+input = stdin.readline
 nbDistributeurs = int(input())
 nbOperations = int(input())
 
-liste_D = [[] for i in range(nbDistributeurs+1)]
-
-def retirer(liste, val):
-    i = 0
-    while val > 0:
-        if liste[i][1] > val:
-            liste[i][1] = liste[i][1] - val
-            val = 0
-        else:
-            val -= liste[i][1]
-            liste[i][1] = 0
-            i += 1
-    return liste[i:]
+liste_D = [[0, [], 99999999] for i in range(nbDistributeurs+1)]
 
 for i in range(nbOperations):
     iDistributeur, operation, date = [int(x) for x in input().split(" ")]
+    op = liste_D[iDistributeur][0] + operation
+    liste_D[iDistributeur][0] = op
     if operation > 0:
-        liste_D[iDistributeur].append([date, operation])
-    else:
-        liste_D[iDistributeur] = retirer(liste_D[iDistributeur], -operation)
+        n = len(liste_D[iDistributeur][1])
+        if liste_D[iDistributeur][2] >= date:
+            liste_D[iDistributeur][1] = []
+            liste_D[iDistributeur][2] = date
+        elif op < n:
+            liste_D[iDistributeur][1] = liste_D[iDistributeur][1][n-op:]
+        liste_D[iDistributeur][1].append([operation, date])
 
-liste = [""]*nbDistributeurs
 for i in range(1, nbDistributeurs+1):
-    if liste_D[i] == []:
-        val = "0"
+    som = liste_D[i][0]
+    if som == 0:
+        val = 0
     else:
-        val = str(min(liste_D[i])[0])
-    liste[i-1] = val
-
-print("\n".join(liste))
+        l_ = liste_D[i][1][-1]
+        val = l_[1]
+        n = som - l_[0]
+        j = 1
+        length = len(liste_D[i][1])
+        while n > 0 and j < length:
+            j += 1
+            l_ = liste_D[i][1][-j]
+            val = min(val, l_[1])
+            n -= l_[0]
+    stdout.write("%d\n" %val)
