@@ -1,19 +1,19 @@
+
+
 nbr_produit = int(input())
-code_produit = input().split()
+code_produit = [int(x) for x in input().split()]
 nbr_recherche = int(input())
-recherches = input().split()
+recherches = [int(x) for x in input().split()]
 
 
 def trouver_produit(recherche):
-    global recherches
-    if recherche == "0":
-        return
+    if recherche == 0:
+        return []
     else:
-        trouver_produit(code_produit[int(recherche) - 1])
-        if code_produit[int(recherche) - 1] != "0":
-            print(code_produit[int(recherche) - 1], end=" ")
+        return trouver_produit(code_produit[recherche-1])+[str(recherche)]
 
 
 for recherche in recherches:
-    trouver_produit(recherche)
-    print(recherche)
+    print(" ".join(trouver_produit(recherche)))
+
+

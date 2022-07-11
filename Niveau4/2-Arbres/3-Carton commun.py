@@ -64,3 +64,31 @@ if len(code_produit) > 15000 or True:
             print(trouver_commun(0, len(arbre[recherche[0]])-1, recherche[0], recherche[1]))
         else:
             print(trouver_commun(0, len(arbre[recherche[1]])-1, recherche[1], recherche[0]))"""
+
+
+# nouveau
+
+
+nbr_produit = int(input())
+code_produit = [int(x) for x in input().split()]
+nbr_recherche = int(input())
+
+
+def trouver_produit(recherche):
+    if recherche == 0:
+        return []
+    else:
+        return trouver_produit(code_produit[recherche-1])+[recherche]
+
+def commun(l1, l2, x):
+    if l1 == [] or l2 == [] or l1[0] != l2[0]:
+        return x
+    else:
+        return commun(l1[1:], l2[1:], l1[0])
+
+
+for _ in range(nbr_recherche):
+    a, b = [int(x) for x in input().split()]
+    print(commun(trouver_produit(a), trouver_produit(b), 0))
+
+    
